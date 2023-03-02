@@ -1,0 +1,172 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/1e3c0f094b.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="container">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Soldiers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/squads">Squads</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/weapons">Weapons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/vehicles">Vehicles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="/keys">Keys</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/buildings">Buildings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/key_holders">Key Holders</a>
+          </li>
+      </ul>
+    
+    <h1>Welcome to the Manning Report!</h1>
+    
+    <h5>Please see the following Manning report for each squad</h5>
+    
+    
+
+      <div>
+        <h1>List of Keys</h1>
+
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Key Number</th>
+                <th scope="col">Key Description</th>
+                <th scope="col">Vehicle ID</th>
+                <th scope="col">Building ID</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>1</td>
+                <td>Key To Battalion Office</td>
+                <td></td>
+                <td>1</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>1</td>
+                <td>Backup Key to Battalion Office</td>
+                <td></td>
+                <td>1</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>2</td>
+                <td>Key to barracks Bulding 8833, room 1</td>
+                <td></td>
+                <td>12</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>1</td>
+                <td>Key to barracks Bulding 8833, room 1</td>
+                <td></td>
+                <td>12</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5>Add a new Key</h5>
+
+          <form>
+            <div class="mb-3">
+              <label for="keynumber" class="form-label">Key Number</label>
+              <input type="number" class="form-control" id="keynumber">
+            </div>
+            <div class="mb-3">
+              <label for="keydescription" class="form-label">Key Description</label>
+              <input type="text" class="form-control" id="keydescription">
+            </div>
+            <div class="mb-3">
+                <label for="vehicleID" class="form-label">Vehicle ID</label>
+                <select class="form-select" aria-label="Default select example" id="vehicleID">
+                    <option selected>Open this select menu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">4</option>
+                    <option value="3">7</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                <label for="buildingID" class="form-label">Building ID</label>
+                <select class="form-select" aria-label="Default select example" id="buildingID">
+                    <option selected>Open this select menu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">12</option>
+                  </select>
+              </div>
+    
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+          <h5>Edit a Vehicle</h5>
+
+          <form>
+            <div class="mb-3">
+                <label for="keyID" class="form-label">Key ID</label>
+                <select class="form-select" aria-label="Default select example" id="keyID">
+                    <option selected>Open this select menu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                  </select>
+              </div>
+            
+              <div class="mb-3">
+                <label for="keynumber" class="form-label">Key Number</label>
+                <input type="number" class="form-control" id="keynumber">
+              </div>
+              <div class="mb-3">
+                <label for="keydescription" class="form-label">Key Description</label>
+                <input type="text" class="form-control" id="keydescription">
+              </div>
+              <div class="mb-3">
+                <label for="vehicleID" class="form-label">Vehicle ID</label>
+                <select class="form-select" aria-label="Default select example" id="vehicleID">
+                    <option selected>Open this select menu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">4</option>
+                    <option value="3">7</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                <label for="buildingID" class="form-label">Building ID</label>
+                <select class="form-select" aria-label="Default select example" id="buildingID">
+                    <option selected>Open this select menu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">12</option>
+                  </select>
+              </div>
+    
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    
+</body>

@@ -1,0 +1,122 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/1e3c0f094b.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="container">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Soldiers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/squads">Squads</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/weapons">Weapons</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/vehicles">Vehicles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="/keys">Keys</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/buildings">Buildings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/key_holders">Key Holders</a>
+          </li>
+      </ul>
+    
+    <h1>Welcome to the Manning Report!</h1>
+    
+    <h5>Please see the following Manning report for each squad</h5>
+    
+    
+
+      <div>
+        <h1>List of Keys</h1>
+
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Building Name</th>
+                <th scope="col">Building Address</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Babbit Hall</td>
+                <td>2432 Bamford Dr.</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Lowry DFAC</td>
+                <td>7582 Sherman St.</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>2628</td>
+                <td>2628 Duncan Ave.</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">12</th>
+                <td>8833</td>
+                <td>8833 Fremont St.</td>
+                <td><i class="fa-solid fa-delete-left"></i></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5>Add a new Key</h5>
+
+          <form>
+            <div class="mb-3">
+              <label for="buildingname" class="form-label">Building Name</label>
+              <input type="text" class="form-control" id="buildingname">
+            </div>
+            <div class="mb-3">
+              <label for="buildingaddress" class="form-label">Building Address</label>
+              <input type="text" class="form-control" id="buildingaddress">
+            </div>
+    
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+          <h5>Edit a Vehicle</h5>
+
+          <form>
+            <div class="mb-3">
+                <label for="buidlingID" class="form-label">Building ID</label>
+                <select class="form-select" aria-label="Default select example" id="buildingID">
+                    <option selected>Open this select menu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">12</option>
+                  </select>
+              </div>
+            
+              <div class="mb-3">
+                <label for="buildingname" class="form-label">Building Name</label>
+                <input type="text" class="form-control" id="buildingname">
+              </div>
+              <div class="mb-3">
+                <label for="buildingaddress" class="form-label">Building Address</label>
+                <input type="text" class="form-control" id="buildingaddress">
+              </div>
+    
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    
+</body>
