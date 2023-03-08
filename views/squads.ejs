@@ -51,43 +51,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>SSG Guilin</td>
-                <td>Alpha 1-1</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>SSG Mercer</td>
-                <td>Alpha 1-2</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>SGT Duffy</td>
-                <td>Alpha 2-4</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">7</th>
-                <td>SSG Veerkamp</td>
-                <td>Bravo 2-3</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
+              <% for (let squad of squads) {%>
+                <tr>
+                    <th scope="row"><%= squad.squad_id%></th>
+                    <td><%= squad.squad_leader %></td>
+                    <td><%= squad.squad_name%></td>
+                    <td><form action="/squads/delete/<%= squad.squad_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
+                </tr>
+              <%}%>
             </tbody>
           </table>
 
           <h5>Add a new Squad</h5>
 
-          <form>
+          <form action='/squads/new' method="POST">
             <div class="mb-3">
               <label for="name" class="form-label">Squad Leader</label>
-              <input type="text" class="form-control" id="name">
+              <input type="text" class="form-control" id="name" name="squad[leader]">
             </div>
             <div class="mb-3">
               <label for="Rank" class="form-label">Squad Name</label>
-              <input type="text" class="form-control" id="Rank">
+              <input type="text" class="form-control" id="rank" name="squad[name]">
             </div>
     
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -99,11 +83,9 @@
             <div class="mb-3">
                 <label for="soldierID" class="form-label">Solder ID</label>
                 <select class="form-select" aria-label="Default select example" id="soldierID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">4</option>
-                    <option value="3">7</option>
+                  <% for (let squad of squads) {%>
+                    <option value="<%= squad.squad_id%>"><%= squad.squad_id%></option>
+                    <%}%>
                   </select>
               </div>
             
