@@ -79,10 +79,10 @@
 
           <h5>Edit a Squad</h5>
 
-          <form>
+          <form action="/squads/edit/?_method=PUT" method="POST">
             <div class="mb-3">
                 <label for="soldierID" class="form-label">Solder ID</label>
-                <select class="form-select" aria-label="Default select example" id="soldierID">
+                <select class="form-select" aria-label="Default select example" id="soldierID" name="squad[id]">
                   <% for (let squad of squads) {%>
                     <option value="<%= squad.squad_id%>"><%= squad.squad_id%></option>
                     <%}%>
@@ -91,11 +91,11 @@
             
               <div class="mb-3">
                 <label for="name" class="form-label">Squad Leader</label>
-                <input type="text" class="form-control" id="name">
+                <input type="text" class="form-control" id="name" name="squad[leader]">
               </div>
               <div class="mb-3">
                 <label for="Rank" class="form-label">Squad Name</label>
-                <input type="text" class="form-control" id="Rank">
+                <input type="text" class="form-control" id="Rank" name="squad[name]">
               </div>
     
             <button type="submit" class="btn btn-primary">Submit</button>

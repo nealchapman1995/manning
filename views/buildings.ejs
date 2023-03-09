@@ -38,7 +38,7 @@
     
 
       <div>
-        <h1>List of Keys</h1>
+        <h1>List of Building</h1>
 
 
         <table class="table">
@@ -51,69 +51,52 @@
               </tr>
             </thead>
             <tbody>
+              <% for (let building of buildings) {%>
+                <tr>
+                    <th scope="row"><%= building.building_id%></th>
+                    <td><%= building.building_name%></td>
+                    <td><%= building.building_address%></td>
+                    <td><form action="/buildings/delete/<%= building.building_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
+                </tr>
+              <%}%>
               <tr>
-                <th scope="row">1</th>
-                <td>Babbit Hall</td>
-                <td>2432 Bamford Dr.</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Lowry DFAC</td>
-                <td>7582 Sherman St.</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>2628</td>
-                <td>2628 Duncan Ave.</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">12</th>
-                <td>8833</td>
-                <td>8833 Fremont St.</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
             </tbody>
           </table>
 
-          <h5>Add a new Key</h5>
+          <h5>Add a new Building</h5>
 
-          <form>
+          <form action="/buildings/new" method="POST">
             <div class="mb-3">
               <label for="buildingname" class="form-label">Building Name</label>
-              <input type="text" class="form-control" id="buildingname">
+              <input type="text" class="form-control" id="buildingname" name="building[name]">
             </div>
             <div class="mb-3">
               <label for="buildingaddress" class="form-label">Building Address</label>
-              <input type="text" class="form-control" id="buildingaddress">
+              <input type="text" class="form-control" id="buildingaddress" name="building[address]">
             </div>
     
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
 
-          <h5>Edit a Vehicle</h5>
+          <h5>Edit a Building</h5>
 
-          <form>
+          <form action="/buildings/edit/?_method=PUT" method="POST">
             <div class="mb-3">
                 <label for="buidlingID" class="form-label">Building ID</label>
-                <select class="form-select" aria-label="Default select example" id="buildingID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">12</option>
+                <select class="form-select" aria-label="Default select example" id="buildingID" name="building[id]">
+                  <% for (let building of buildings) {%>
+                    <option value="<%= building.building_id%>"><%= building.building_id%></option>
+                    <%}%>
                   </select>
               </div>
             
               <div class="mb-3">
                 <label for="buildingname" class="form-label">Building Name</label>
-                <input type="text" class="form-control" id="buildingname">
+                <input type="text" class="form-control" id="buildingname" name="building[name]">
               </div>
               <div class="mb-3">
                 <label for="buildingaddress" class="form-label">Building Address</label>
-                <input type="text" class="form-control" id="buildingaddress">
+                <input type="text" class="form-control" id="buildingaddress" name="building[address]">
               </div>
     
             <button type="submit" class="btn btn-primary">Submit</button>

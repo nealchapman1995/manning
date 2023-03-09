@@ -11,6 +11,7 @@ CreateWeaponTabler = "CREATE TABLE `Weapons` (`weapon_id` int(11) NOT NULL, `wea
 SelectSoldiers = "SELECT * FROM Soldiers;";
 SelectWeapons = "SELECT * FROM Weapons;";
 SelectSquad = "SELECT * FROM Squads;";
+SelectBuilding = "SELECT * FROM Buildings;"
 
 
 app.set('view engine', 'ejs');
@@ -22,12 +23,7 @@ app.use(methodOverride('_method'));
 let weapons = ""
 let soldiers = ""
 let squads = ""
-
-db.pool.query(CreateSoldierTable, function(err, results, fields){
-});
-
-
-
+let buildings = ""
 
 /*
     ROUTES
@@ -36,16 +32,14 @@ app.get('/', function(req, res)
     {   
         db.pool.query(SelectWeapons, function(err, results, fields){
             weapons = results
-        })
-
-        db.pool.query(SelectSquad, function(err, results, fields){
-            squads = results
-        })
-
-        db.pool.query(SelectSoldiers, function(err, results, fields){
-            soldiers = results 
-            res.render('soldiers', {soldiers, weapons, squads})  
-        })
+            db.pool.query(SelectSquad, function(err, results, fields){
+                squads = results
+                db.pool.query(SelectSoldiers, function(err, results, fields){
+                    soldiers = results 
+                    res.render('soldiers', {soldiers, weapons, squads})  
+                })
+            })
+        })   
          
     });
 
@@ -66,6 +60,7 @@ app.delete('/delete_soldier/:id', async(req, res) => {
 app.put('/edit_soldier', async(req, res) => {
     let soldier_edit = `UPDATE Soldiers SET soldier_name = '${req.body.soldier.name}', rank = '${req.body.soldier.rank}', address = '${req.body.soldier.address}', soldier_status = '${req.body.soldier.status}', Squads_squad_id = ${req.body.soldier.squadID}, Weapons_weapon_id = ${req.body.soldier.weaponID} WHERE soldier_id = ${req.body.soldier.id}`;
     db.pool.query(soldier_edit, function(err, results, fields) {
+        console.log(err)
         res.redirect("/")
     })
 })
@@ -86,6 +81,14 @@ app.delete('/squads/delete/:id', async(req, res) => {
     })
 })
 
+app.put('/squads/edit', async(req, res) => {
+    let squad_edit = `UPDATE Squads SET squad_leader = '${req.body.squad.leader}', squad_name = '${req.body.squad.name}' WHERE squad_id = ${req.body.squad.id}`;
+    db.pool.query(squad_edit, function(err, results, fields) {
+        console.log(err)
+        res.redirect('/squads')
+    })
+})
+
 app.get('/squads', function(req, res){
     db.pool.query(SelectSquad, function(err, results, fields){
         squads = results
@@ -93,8 +96,40 @@ app.get('/squads', function(req, res){
     })
 });
 
+app.put('/weapons/edit', (req, res) => {
+    let weapons_edit = `UPDATE Weapons SET weapon_model = '${req.body.weapon.model}', weapon_status = '${req.body.weapon.status}', Squads_squad_id = ${req.body.weapon.squadid} WHERE weapon_id = ${req.body.weapon.id}`;
+    db.pool.query(weapons_edit, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/weapons')
+    })
+})
+
+app.delete('/weapons/delete/:id', (req, res) => {
+    let weapons_delete = `DELETE FROM Weapons WHERE weapon_id = ${req.params.id}`;
+    db.pool.query(weapons_delete, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/weapons')
+    })
+})
+
+app.post('/weapons/new', (req, res) => {
+    let weapon_insert = `INSERT INTO Weapons (weapon_model, weapon_status, Squads_squad_id)
+    VALUES ('${req.body.weapon.model}', '${req.body.weapon.status}', '${req.body.weapon.squadid}');`
+    db.pool.query(weapon_insert, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/weapons')
+    })
+})
+
 app.get('/weapons', function(req, res){
-    res.render('weapons')
+    db.pool.query(SelectSquad, function(err, results, fields){
+        squads = results
+        db.pool.query(SelectWeapons, function(err, results, fields) {
+            weapons = results
+            res.render('weapons', {squads, weapons})
+        })
+    })
+    
 });
 
 app.get('/vehicles', function(req, res) {
@@ -105,8 +140,36 @@ app.get('/keys', function(req, res) {
     res.render('keys')
 });
 
+app.delete('/buildings/delete/:id', (req, res) => {
+    let buildings_delete = `DELETE FROM Buildings WHERE building_id = ${req.params.id}`
+    db.pool.query(buildings_delete, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/buildings')
+    })
+});
+
+app.post('/buildings/new', (req, res) => {
+    let new_building = `INSERT INTO Buildings (building_name, building_address)
+    VALUES ('${req.body.building.name}', '${req.body.building.address}');`
+    db.pool.query(new_building, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/buildings')
+    })
+})
+
+app.put('/buildings/edit', (req, res) => {
+    let building_edit = `UPDATE Buildings SET building_name = '${req.body.building.name}', building_address = '${req.body.building.address}' WHERE building_id = ${req.body.building.id}`;
+    db.pool.query(building_edit, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/buildings')
+    })
+})
+
 app.get('/buildings', function(req, res) {
-    res.render('buildings')
+    db.pool.query(SelectBuilding, (err, results, fields) => {
+        buildings = results
+        res.render('buildings', {buildings})
+    })
 });
 
 app.get('/key_holders', function(req,res) {
