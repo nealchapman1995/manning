@@ -54,74 +54,49 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>M1152</td>
-                <td>4</td>
-                <td>Mission Ready</td>
-                <td>1</td>
-                <td></td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>M1152</td>
-                <td>4</td>
-                <td>Vehicle Maintenance</td>
-                <td>1</td>
-                <td></td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>M1152</td>
-                <td>4</td>
-                <td>Mission Ready</td>
-                <td>2</td>
-                <td></td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>M1152</td>
-                <td>4</td>
-                <td>Mission Ready</td>
-                <td>4</td>
-                <td></td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
+              <% for (let vehicle of vehicles) {%>
+                <tr>
+                    <th scope="row"><%= vehicle.vehicle_id%></th>
+                    <td><%= vehicle.vehicle_type%></td>
+                    <td><%= vehicle.vehicle_capacity%></td>
+                    <td><%= vehicle.vehicle_status%></td>
+                    <td><%= vehicle.Squads_squad_id%></td>
+                    <td><%= vehicle.Weapons_weapon_id%></td>
+                    <td><form action="/vehicles/delete/<%= vehicle.vehicle_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
+                </tr>
+              <%}%>
             </tbody>
           </table>
 
           <h5>Add a new Vehicle</h5>
 
-          <form>
+          <form action="/vehicles/new" method="POST">
             <div class="mb-3">
               <label for="vehicletype" class="form-label">Vehicle Type</label>
-              <input type="text" class="form-control" id="vehicletype">
+              <input type="text" class="form-control" id="vehicletype" name="vehicle[type]">
             </div>
             <div class="mb-3">
               <label for="vehiclecapacity" class="form-label">Vehicle Capacity</label>
-              <input type="number" class="form-control" id="vehiclecapacity">
+              <input type="number" class="form-control" id="vehiclecapacity" name="vehicle[capacity]">
+            </div>
+            <div class="mb-3">
+              <label for="vehiclestatus" class="form-label">Vehicle Status</label>
+              <input type="text" class="form-control" id="vehiclestaus" name="vehicle[status]">
             </div>
             <div class="mb-3">
                 <label for="squadID" class="form-label">Squad ID</label>
-                <select class="form-select" aria-label="Default select example" id="squadID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">4</option>
-                    <option value="3">7</option>
+                <select class="form-select" aria-label="Default select example" id="squadID" name="vehicle[squadid]">
+                  <% for (let squad of squads) {%>
+                    <option value="<%= squad.squad_id%>"><%= squad.squad_id%></option>
+                    <%}%>
                   </select>
               </div>
               <div class="mb-3">
                 <label for="weaponID" class="form-label">Weapon ID</label>
-                <select class="form-select" aria-label="Default select example" id="weapondID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
+                <select class="form-select" aria-label="Default select example" id="weapondID" name="vehicle[weaponid]">
+                  <% for (let weapon of weapons) {%>
+                    <option value="<%= weapon.weapon_id%>"><%= weapon.weapon_id%></option>
+                    <%}%>
                   </select>
               </div>
     
@@ -130,44 +105,43 @@
 
           <h5>Edit a Vehicle</h5>
 
-          <form>
+          <form action="/vehicles/edit/?_method=PUT" method="POST">
             <div class="mb-3">
                 <label for="vehicleID" class="form-label">Vehicle ID</label>
-                <select class="form-select" aria-label="Default select example" id="vehicleID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
+                <select class="form-select" aria-label="Default select example" id="vehicleID" name="vehicle[id]">
+                  <% for (let vehicle of vehicles) {%>
+                    <option value="<%= vehicle.vehicle_id%>"><%= vehicle.vehicle_id%></option>
+                    <%}%>
                   </select>
               </div>
             
               <div class="mb-3">
                 <label for="vehicletype" class="form-label">Vehicle Type</label>
-                <input type="text" class="form-control" id="vehicletype">
+                <input type="text" class="form-control" id="vehicletype" name="vehicle[type]">
               </div>
               <div class="mb-3">
                 <label for="vehiclecapacity" class="form-label">Vehicle Capacity</label>
-                <input type="number" class="form-control" id="vehiclecapacity">
+                <input type="number" class="form-control" id="vehiclecapacity" name="vehicle[capacity]">
+              </div>
+              <div class="mb-3">
+                <label for="vehiclestatus" class="form-label">Vehicle Status</label>
+                <input type="text" class="form-control" id="vehiclestaus" name="vehicle[status]">
               </div>
               <div class="mb-3">
                   <label for="squadID" class="form-label">Squad ID</label>
-                  <select class="form-select" aria-label="Default select example" id="squadID">
-                      <option selected>Open this select menu</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">4</option>
-                      <option value="3">7</option>
+                  <select class="form-select" aria-label="Default select example" id="squadID" name="vehicle[squadid]">
+                    <% for (let squad of squads) {%>
+                      <option value="<%= squad.squad_id%>"><%= squad.squad_id%></option>
+                      <%}%>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="weaponID" class="form-label">Weapon ID</label>
-                    <select class="form-select" aria-label="Default select example" id="weapondID">
-                        <option selected>Open this select menu</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="3">4</option>
+                    <select class="form-select" aria-label="Default select example" id="weapondID" name="vehicle[weaponid]">
+                      <option value="null">No Weapon</option>
+                      <% for (let weapon of weapons) {%>
+                        <option value="<%= weapon.weapon_id%>"><%= weapon.weapon_id%></option>
+                        <%}%>
                       </select>
                   </div>
     

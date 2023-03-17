@@ -53,70 +53,46 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>1</td>
-                <td>Key To Battalion Office</td>
-                <td></td>
-                <td>1</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>1</td>
-                <td>Backup Key to Battalion Office</td>
-                <td></td>
-                <td>1</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>2</td>
-                <td>Key to barracks Bulding 8833, room 1</td>
-                <td></td>
-                <td>12</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>1</td>
-                <td>Key to barracks Bulding 8833, room 1</td>
-                <td></td>
-                <td>12</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
+              <% for (let key of keys) {%>
+                <tr>
+                    <th scope="row"><%= key.key_id%></th>
+                    <td><%= key.key_number%></td>
+                    <td><%= key.key_description%></td>
+                    <td><%= key.Vehicles_vehicle_id%></td>
+                    <td><%= key.Buildings_building_id%></td>
+                    <td><form action="/key/delete/<%= key.key_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
+                </tr>
+              <%}%>
             </tbody>
           </table>
 
           <h5>Add a new Key</h5>
 
-          <form>
+          <form action="/keys/new" method="POST">
             <div class="mb-3">
               <label for="keynumber" class="form-label">Key Number</label>
-              <input type="number" class="form-control" id="keynumber">
+              <input type="number" class="form-control" id="keynumber" name="key[number]">
             </div>
             <div class="mb-3">
               <label for="keydescription" class="form-label">Key Description</label>
-              <input type="text" class="form-control" id="keydescription">
+              <input type="text" class="form-control" id="keydescription" name="key[description]">
             </div>
             <div class="mb-3">
                 <label for="vehicleID" class="form-label">Vehicle ID</label>
-                <select class="form-select" aria-label="Default select example" id="vehicleID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">4</option>
-                    <option value="3">7</option>
+                <select class="form-select" aria-label="Default select example" id="vehicleID" name="key[vehicleid]">
+                    <option value="NULL">No Vehicle</option>
+                    <% for (let vehicle of vehicles) {%>
+                      <option value="<%= vehicle.vehicle_id%>"><%= vehicle.vehicle_id%></option>
+                      <%}%>
                   </select>
               </div>
               <div class="mb-3">
                 <label for="buildingID" class="form-label">Building ID</label>
                 <select class="form-select" aria-label="Default select example" id="buildingID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">12</option>
+                    <option value="NULL">No Building</option>
+                    <% for (let building of buildings) {%>
+                      <option value="<%= building.building_id%>"><%= building.building_id%></option>
+                      <%}%>
                   </select>
               </div>
     

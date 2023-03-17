@@ -1,7 +1,7 @@
 // Express
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 8020;  // Set a port number at the top so it's easy to change in the future
+PORT        = 8010;  // Set a port number at the top so it's easy to change in the future
 const methodOverride = require('method-override');
 
 var db = require('./db-connector')
@@ -11,7 +11,9 @@ CreateWeaponTabler = "CREATE TABLE `Weapons` (`weapon_id` int(11) NOT NULL, `wea
 SelectSoldiers = "SELECT * FROM Soldiers;";
 SelectWeapons = "SELECT * FROM Weapons;";
 SelectSquad = "SELECT * FROM Squads;";
-SelectBuilding = "SELECT * FROM Buildings;"
+SelectBuilding = "SELECT * FROM Buildings;";
+SelectVehicles = "SELECT * FROM Vehicles;";
+SelectKeys = "SELECT * FROM 'Keys';";
 
 
 app.set('view engine', 'ejs');
@@ -24,6 +26,8 @@ let weapons = ""
 let soldiers = ""
 let squads = ""
 let buildings = ""
+let vehicles = ""
+let keys = ""
 
 /*
     ROUTES
@@ -132,18 +136,64 @@ app.get('/weapons', function(req, res){
     
 });
 
+app.put('/vehicles/edit', (req, res) => {
+    let vehicle_edit = `UPDATE Vehicles SET vehicle_type = '${req.body.vehicle.type}', vehicle_capacity = ${req.body.vehicle.capacity}, vehicle_status = '${req.body.vehicle.status}', Squads_squad_id = ${req.body.vehicle.squadid}, Weapons_weapon_id = ${req.body.vehicle.weaponid} WHERE vehicle_id = ${req.body.vehicle.id};`
+    db.pool.query(vehicle_edit, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/vehicles')
+    })
+})
+
+app.post('/vehicles/new', (req, res) => {
+    let vehicle_insert = `INSERT INTO Vehicles (vehicle_type, vehicle_capacity, vehicle_status, Squads_squad_id, Weapons_weapon_id)
+    VALUES ('${req.body.vehicle.type}', '${req.body.vehicle.capacity}', '${req.body.vehicle.status}', ${req.body.vehicle.squadid}, ${req.body.vehicle.weaponid});`
+    db.pool.query(vehicle_insert, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/vehicles')
+    })
+})
+
+app.delete('/vehicles/delete/:id', (req, res) => {
+    let vehicle_delete = `DELETE FROM Vehicles WHERE vehicle_id = ${req.params.id}`
+    db.pool.query(vehicle_delete, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/vehicles')
+    })
+})
+
 app.get('/vehicles', function(req, res) {
-    res.render('vehicles')
+    db.pool.query(SelectSquad, function(err, results, fields){
+        squads = results
+        db.pool.query(SelectWeapons, function(err, results, fields) {
+            weapons = results
+            db.pool.query(SelectVehicles, (err, results, fields) => {
+                vehicles = results
+                res.render('vehicles', {vehicles, squads, weapons})
+            })
+            
+        })
+    })
+    
 });
 
 app.get('/keys', function(req, res) {
-    res.render('keys')
+    db.pool.query(SelectBuilding, (err, results, fields) => {
+        buildings = results
+        db.pool.query(SelectVehicles, (err, results, fields) => {
+            vehicles = results
+            db.pool.query(SelectKeys, (err, results, fields) => {
+                keys = results
+                console.log(keys)
+                res.render('buildings', {keys, vehicles, buildings})
+            })
+        })
+
+    })
 });
 
 app.delete('/buildings/delete/:id', (req, res) => {
     let buildings_delete = `DELETE FROM Buildings WHERE building_id = ${req.params.id}`
     db.pool.query(buildings_delete, (err, results, fields) => {
-        console.log(err)
         res.redirect('/buildings')
     })
 });
