@@ -49,50 +49,34 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td scope="row">305</td>
-                <td>1</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <td scope="row">305</td>
-                <td>2</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <td scope="row">2688</td>
-                <td>3</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">2223</th>
-                <td>5</td>
-                <td><i class="fa-solid fa-delete-left"></i></td>
-              </tr>
+              <% for (let keyholder of keyholders) {%>
+                <tr>
+                    <th scope="row"><%= keyholder.Soldiers_soldier_id%></th>
+                    <td><%= keyholder.Keys_key_id%></td>
+                    <td><form action="/key_holders/delete/<%= keyholder.Soldiers_soldier_id%>/<%= keyholder.Keys_key_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
+                </tr>
+              <%}%>
+             
             </tbody>
           </table>
 
           <h5>Check out a new Key</h5>
 
-          <form>
+          <form action="/key_holders/new" method="POST">
             <div class="mb-3">
                 <label for="soldierID" class="form-label">Solder ID</label>
-                <select class="form-select" aria-label="Default select example" id="soldierID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">305</option>
-                    <option value="2">632</option>
-                    <option value="3">897</option>
-                    <option value="3">1586</option>
+                <select class="form-select" aria-label="Default select example" id="soldierID" name="soldier[id]">
+                  <% for (let soldier of soldiers) {%>
+                    <option value="<%= soldier.soldier_id%>"><%= soldier.soldier_id%></option>
+                    <%}%>
                   </select>
               </div>
               <div class="mb-3">
                 <label for="keyID" class="form-label">Key ID</label>
-                <select class="form-select" aria-label="Default select example" id="keyID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
+                <select class="form-select" aria-label="Default select example" id="keyID" name="key[id]">
+                  <% for (let key of keys) {%>
+                    <option value="<%= key.key_id%>"><%= key.key_id%></option>
+                    <%}%>
                   </select>
               </div>
     

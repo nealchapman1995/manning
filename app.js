@@ -13,7 +13,8 @@ SelectWeapons = "SELECT * FROM Weapons;";
 SelectSquad = "SELECT * FROM Squads;";
 SelectBuilding = "SELECT * FROM Buildings;";
 SelectVehicles = "SELECT * FROM Vehicles;";
-SelectKeys = "SELECT * FROM 'Keys';";
+SelectKeys = "SELECT * FROM `Keys`;";
+SelectKeyholders = "SELECT * FROM Keyholders;"
 
 
 app.set('view engine', 'ejs');
@@ -28,6 +29,7 @@ let squads = ""
 let buildings = ""
 let vehicles = ""
 let keys = ""
+let keyholders = ""
 
 /*
     ROUTES
@@ -176,6 +178,14 @@ app.get('/vehicles', function(req, res) {
     
 });
 
+app.put('/keys/edit', (req, res) => {
+    let key_edit = `UPDATE \`Keys\` SET key_number = ${req.body.key.number}, key_description = '${req.body.key.description}', Vehicles_vehicle_id = ${req.body.key.vehicleid}, Buildings_building_id = ${req.body.key.buildingid} WHERE key_id = ${req.body.key.id};`
+    db.pool.query(key_edit, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/keys')
+    })
+})
+
 app.get('/keys', function(req, res) {
     db.pool.query(SelectBuilding, (err, results, fields) => {
         buildings = results
@@ -183,13 +193,28 @@ app.get('/keys', function(req, res) {
             vehicles = results
             db.pool.query(SelectKeys, (err, results, fields) => {
                 keys = results
-                console.log(keys)
-                res.render('buildings', {keys, vehicles, buildings})
+                res.render('keys', {keys, vehicles, buildings})
             })
         })
 
     })
 });
+
+app.post('/keys/new', function(req, res) {
+    let key_insert = `INSERT INTO \`Keys\` (key_number, key_description, Vehicles_vehicle_id, Buildings_building_id) VALUES (${req.body.key.number}, '${req.body.key.description}', ${req.body.key.vehicleid}, ${req.body.key.buildingid});`
+    db.pool.query(key_insert, (err, result, fields) => {
+        console.log(err)
+        res.redirect('/keys')
+    })
+});
+
+app.delete('/keys/delete/:id', (req, res) => {
+    let key_delete = `DELETE FROM \`Keys\`WHERE key_id = ${req.params.id}`
+    db.pool.query(key_delete, (err, result, fields) => {
+        console.log(err)
+        res.redirect('/keys')
+    })
+})
 
 app.delete('/buildings/delete/:id', (req, res) => {
     let buildings_delete = `DELETE FROM Buildings WHERE building_id = ${req.params.id}`
@@ -222,8 +247,32 @@ app.get('/buildings', function(req, res) {
     })
 });
 
+app.post('/key_holders/new', (req, res) => {
+    let key_holder_insert = `INSERT INTO Keyholders (Soldiers_soldier_id, Keys_key_id) VALUES (${req.body.soldier.id}, ${req.body.key.id});`
+    db.pool.query(key_holder_insert, (err, results, fields) => {
+        console.log(err)
+        res.redirect('/key_holders')
+    })
+})
+
+app.delete('/key_holders/delete/:soldierid/:keyid', (req, res) => {
+    let key_holder_delete = `DELETE FROM Keyholders WHERE Soldiers_soldier_id = ${req.params.soldierid} AND Keys_key_id = ${req.params.keyid}`
+    db.pool.query(key_holder_delete, (err, results, fields) => {
+        res.redirect('/key_holders')
+    })
+})
+
 app.get('/key_holders', function(req,res) {
-    res.render('keyholders')
+    db.pool.query(SelectKeys, (err, results, fields) => {
+        keys = results
+        db.pool.query(SelectSoldiers, function(err, results, fields){
+            soldiers = results 
+            db.pool.query(SelectKeyholders, (err, results, fields) => {
+                keyholders = results
+                res.render('keyholders', {soldiers, keys, keyholders})
+            })
+        })
+    })
 })
 
     /*

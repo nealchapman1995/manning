@@ -60,7 +60,7 @@
                     <td><%= key.key_description%></td>
                     <td><%= key.Vehicles_vehicle_id%></td>
                     <td><%= key.Buildings_building_id%></td>
-                    <td><form action="/key/delete/<%= key.key_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
+                    <td><form action="/keys/delete/<%= key.key_id%>?_method=DELETE" method="POST"><button class="fa-solid fa-delete-left"></button></form></td>
                 </tr>
               <%}%>
             </tbody>
@@ -88,7 +88,7 @@
               </div>
               <div class="mb-3">
                 <label for="buildingID" class="form-label">Building ID</label>
-                <select class="form-select" aria-label="Default select example" id="buildingID">
+                <select class="form-select" aria-label="Default select example" id="buildingID" name="key[buildingid]">
                     <option value="NULL">No Building</option>
                     <% for (let building of buildings) {%>
                       <option value="<%= building.building_id%>"><%= building.building_id%></option>
@@ -99,46 +99,42 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
 
-          <h5>Edit a Vehicle</h5>
+          <h5>Edit a Key</h5>
 
-          <form>
+          <form action="/keys/edit/?_method=PUT" method="POST">
             <div class="mb-3">
                 <label for="keyID" class="form-label">Key ID</label>
-                <select class="form-select" aria-label="Default select example" id="keyID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
+                <select class="form-select" aria-label="Default select example" id="keyID" name="key[id]">
+                  <% for (let key of keys) {%>
+                    <option value="<%= key.key_id%>"><%= key.key_id%></option>
+                    <%}%>
                   </select>
               </div>
             
               <div class="mb-3">
                 <label for="keynumber" class="form-label">Key Number</label>
-                <input type="number" class="form-control" id="keynumber">
+                <input type="number" class="form-control" id="keynumber" name="key[number]">
               </div>
               <div class="mb-3">
                 <label for="keydescription" class="form-label">Key Description</label>
-                <input type="text" class="form-control" id="keydescription">
+                <input type="text" class="form-control" id="keydescription" name="key[description]">
               </div>
               <div class="mb-3">
                 <label for="vehicleID" class="form-label">Vehicle ID</label>
-                <select class="form-select" aria-label="Default select example" id="vehicleID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">4</option>
-                    <option value="3">7</option>
+                <select class="form-select" aria-label="Default select example" id="vehicleID" name="key[vehicleid]">
+                  <option value="NULL">No Vehicle</option>
+                  <% for (let vehicle of vehicles) {%>
+                    <option value="<%= vehicle.vehicle_id%>"><%= vehicle.vehicle_id%></option>
+                    <%}%>
                   </select>
               </div>
               <div class="mb-3">
                 <label for="buildingID" class="form-label">Building ID</label>
-                <select class="form-select" aria-label="Default select example" id="buildingID">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">12</option>
+                <select class="form-select" aria-label="Default select example" id="buildingID" name="key[buildingid]">
+                  <option value="NULL">No Building</option>
+                  <% for (let building of buildings) {%>
+                    <option value="<%= building.building_id%>"><%= building.building_id%></option>
+                    <%}%>
                   </select>
               </div>
     
